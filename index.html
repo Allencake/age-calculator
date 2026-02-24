@@ -33,7 +33,7 @@
         <main>
             <div class="calculator-card">
                 <div class="input-section">
-                    <div class="input-group"><label>Date of Birth</labelinput type="date" id="birthdate" required></div
+                    <div class="input-group"><label>Date of Birth</label><input type="date" id="birthdate" required></div>
                     <div class="input-group"><label>Calculate Age On (Optional)</label><input type="date" id="calcdate"></div>
                 </div>
                 <button class="calculate-btn" onclick="calculateAge()">Calculate Age</button>
@@ -59,15 +59,18 @@
     <script>
         document.getElementById('calcdate').valueAsDate = new Date();
         function calculateAge() {
-            const birth = new Date(document.getElementById('birthdate').value);
-            const calc = document.getElementById('calcdate').value ? new Date(document.getElementById('calcdate').value) : new Date();
-            if (!birth) return alert('Please enter date of birth');
-            let years = calc.getFullYear() - birth.getFullYear();
-            let months = calc.getMonth() - birth.getMonth();
-            let days = calc.getDate() - birth.getDate();
-            if (days < 0) { months--; days += new Date(calc.getFullYear(), calc.getMonth(), 0).getDate(); }
+            var birth = document.getElementById('birthdate').value;
+            var calc = document.getElementById('calcdate').value;
+            if (!birth) { alert('Please enter your date of birth'); return; }
+            var birthDate = new Date(birth);
+            var calcDate = calc ? new Date(calc) : new Date();
+            if (birthDate > calcDate) { alert('Birth date cannot be in the future'); return; }
+            var years = calcDate.getFullYear() - birthDate.getFullYear();
+            var months = calcDate.getMonth() - birthDate.getMonth();
+            var days = calcDate.getDate() - birthDate.getDate();
+            if (days < 0) { months--; days += new Date(calcDate.getFullYear(), calcDate.getMonth(), 0).getDate(); }
             if (months < 0) { years--; months += 12; }
-            const diff = Math.abs(calc - birth);
+            var diff = Math.abs(calcDate - birthDate);
             document.getElementById('years').textContent = years;
             document.getElementById('months').textContent = months;
             document.getElementById('days').textContent = days;
@@ -79,5 +82,3 @@
     </script>
 </body>
 </html>
-
-
