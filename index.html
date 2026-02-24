@@ -6,61 +6,72 @@
     <title>Age Calculator - Calculate Your Exact Age Online</title>
     <meta name="description" content="Free online age calculator. Calculate your exact age in years, months, days, hours, minutes, and seconds.">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
-        .container { max-width: 800px; margin: 0 auto; }
-        header { text-align: center; color: white; padding: 40px 0; }
-        header h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        .calculator-card { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); margin-bottom: 30px; }
-        .input-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
-        @media (max-width: 600px) { .input-section { grid-template-columns: 1fr; } }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); min-height: 100vh; padding: 20px; color: #fff; }
+        .container { max-width: 900px; margin: 0 auto; }
+        header { text-align: center; padding: 60px 20px 40px; }
+        .badge { display: inline-block; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 8px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; color: #a78bfa; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        header h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 15px; background: linear-gradient(135deg, #fff 0%, #a78bfa 50%, #ec4899 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.02em; }
+        @media (max-width: 640px) { header h1 { font-size: 2.5rem; } }
+        header p { font-size: 1.25rem; color: rgba(255,255,255,0.6); }
+        .glass-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border-radius: 24px; padding: 40px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); margin-bottom: 30px; }
+        .input-section { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 30px; }
+        @media (max-width: 640px) { .input-section { grid-template-columns: 1fr; } }
         .input-group { display: flex; flex-direction: column; }
-        .input-group label { font-weight: 600; color: #333; margin-bottom: 8px; font-size: 0.95rem; }
-        .input-group input { padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; }
-        .calculate-btn { width: 100%; padding: 18px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-size: 1.2rem; font-weight: 600; cursor: pointer; margin-top: 10px; }
-        .calculate-btn:hover { opacity: 0.9; }
-        .result-section { display: none; margin-top: 30px; padding: 30px; background: #f8f9fa; border-radius: 15px; text-align: center; }
+        .input-group label { font-weight: 600; color: rgba(255,255,255,0.8); margin-bottom: 10px; font-size: 0.95rem; }
+        .input-group input { padding: 16px 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; font-size: 1rem; color: #fff; }
+        .input-group input:focus { outline: none; border-color: #a78bfa; background: rgba(255,255,255,0.08); }
+        .calculate-btn { width: 100%; padding: 18px 32px; background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%); color: white; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 10px 30px -10px rgba(139,92,246,0.5); }
+        .calculate-btn:hover { transform: translateY(-2px); box-shadow: 0 20px 40px -10px rgba(139,92,246,0.6); }
+        .result-section { display: none; margin-top: 40px; animation: fadeIn 0.5s ease; }
         .result-section.show { display: block; }
-        .result-section h2 { color: #333; margin-bottom: 20px; font-size: 1.5rem; }
-        .age-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-        @media (max-width: 600px) { .age-grid { grid-template-columns: repeat(2, 1fr); } }
-        .age-item { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; }
-        .age-number { font-size: 2rem; font-weight: 700; color: #667eea; display: block; margin-bottom: 5px; }
-        .age-item span:last-child { color: #666; font-size: 0.9rem; }
-        .content-section { background: white; border-radius: 20px; padding: 40px; margin-bottom: 30px; }
-        .content-section h2 { color: #333; margin-bottom: 20px; font-size: 1.5rem; }
-        .content-section p { color: #555; line-height: 1.8; margin-bottom: 15px; }
-        footer { text-align: center; color: white; padding: 30px; opacity: 0.8; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .result-title { text-align: center; font-size: 1.5rem; font-weight: 600; margin-bottom: 24px; color: rgba(255,255,255,0.9); }
+        .age-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        @media (max-width: 640px) { .age-grid { grid-template-columns: repeat(2, 1fr); } }
+        .age-item { background: rgba(255,255,255,0.05); padding: 24px 16px; border-radius: 16px; text-align: center; border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s; }
+        .age-item:hover { background: rgba(255,255,255,0.08); transform: translateY(-4px); }
+        .age-number { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; margin-bottom: 8px; }
+        .age-label { font-size: 0.9rem; color: rgba(255,255,255,0.5); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+        .content-section { background: rgba(255,255,255,0.03); border-radius: 24px; padding: 40px; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.05); }
+        .content-section h2 { color: #fff; margin-bottom: 20px; font-size: 1.5rem; font-weight: 700; }
+        .content-section p { color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 16px; }
+        footer { text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.4); font-size: 0.9rem; }
     </style>
 </head>
 <body>
     <div class="container">
-        <header><h1>Age Calculator</h1><p>Calculate your exact age with precision</p></header>
+        <header>
+            <div class="badge">✨ Free Online Tool</div>
+            <h1>Age Calculator</h1>
+            <p>Discover your exact age in seconds</p>
+        </header>
         <main>
-            <div class="calculator-card">
+            <div class="glass-card">
                 <div class="input-section">
                     <div class="input-group"><label>Date of Birth</label><input type="date" id="birthdate" required></div>
                     <div class="input-group"><label>Calculate Age On (Optional)</label><input type="date" id="calcdate"></div>
                 </div>
-                <button class="calculate-btn" onclick="calculateAge()">Calculate Age</button>
+                <button class="calculate-btn" onclick="calculateAge()">Calculate My Age →</button>
                 <div class="result-section" id="result">
-                    <h2>Your Age</h2>
+                    <h2 class="result-title">Your Precise Age</h2>
                     <div class="age-grid">
-                        <div class="age-item"><span class="age-number" id="years">0</span><span>Years</span></div>
-                        <div class="age-item"><span class="age-number" id="months">0</span><span>Months</span></div>
-                        <div class="age-item"><span class="age-number" id="days">0</span><span>Days</span></div>
-                        <div class="age-item"><span class="age-number" id="hours">0</span><span>Hours</span></div>
-                        <div class="age-item"><span class="age-number" id="minutes">0</span><span>Minutes</span></div>
-                        <div class="age-item"><span class="age-number" id="seconds">0</span><span>Seconds</span></div>
+                        <div class="age-item"><span class="age-number" id="years">0</span><span class="age-label">Years</span></div>
+                        <div class="age-item"><span class="age-number" id="months">0</span><span class="age-label">Months</span></div>
+                        <div class="age-item"><span class="age-number" id="days">0</span><span class="age-label">Days</span></div>
+                        <div class="age-item"><span class="age-number" id="hours">0</span><span class="age-label">Hours</span></div>
+                        <div class="age-item"><span class="age-number" id="minutes">0</span><span class="age-label">Minutes</span></div>
+                        <div class="age-item"><span class="age-number" id="seconds">0</span><span class="age-label">Seconds</span></div>
                     </div>
                 </div>
             </div>
             <article class="content-section">
-                <h2>How to Use</h2>
-                <p>Enter your date of birth and click Calculate Age. Our calculator shows your exact age in years, months, days, hours, minutes, and seconds.</p>
+                <h2>How It Works</h2>
+                <p>Simply enter your date of birth and click the button. Our advanced calculator instantly computes your exact age down to the second.</p>
             </article>
         </main>
-        <footer><p>&copy; 2025 Age Calculator</p></footer>
+        <footer><p>© 2025 Age Calculator · Free Online Tool</p></footer>
     </div>
     <script>
         document.getElementById('calcdate').valueAsDate = new Date();
